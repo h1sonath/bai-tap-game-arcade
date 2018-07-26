@@ -53,7 +53,7 @@ public class GameCanvas extends JPanel {
     public void renderAll() {
         this.renderBackground();
         this.stars.forEach(star -> star.render(graphics));
-        if(this.player.x[0]!=1800)
+        if(1!=2)
             this.player.render(graphics);
         this.repaint();
     }
