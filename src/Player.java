@@ -1,10 +1,8 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 public class Player {
 
-    public Random random = new Random();
     public int x[] = {80, 40, 80};
     public int y[] = {160, 80, 160};
 
