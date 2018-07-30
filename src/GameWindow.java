@@ -29,46 +29,37 @@ public class GameWindow extends JFrame {
         this.windowEvent();
     }
 
-      private void keyboardEvent() {
+    private void keyboardEvent() {
         this.addKeyListener(new KeyListener() {
-        @Override
-        public void keyTyped(KeyEvent e) {
-        }
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    gameCanvas.player.velocity.multiply(10);
+                }
+            }
 
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                gameCanvas.player.x[0] -= gameCanvas.player.velocity;
-                gameCanvas.player.x[1] -= gameCanvas.player.velocity;
-                gameCanvas.player.x[2] -= gameCanvas.player.velocity;
-                gameCanvas.playerMove();
-            }
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                gameCanvas.player.x[0] += gameCanvas.player.velocity;
-                gameCanvas.player.x[1] += gameCanvas.player.velocity;
-                gameCanvas.player.x[2] += gameCanvas.player.velocity;
-                gameCanvas.playerMove();
-            }
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-                gameCanvas.player.y[0] -= gameCanvas.player.velocity;
-                gameCanvas.player.y[1] -= gameCanvas.player.velocity;
-                gameCanvas.player.y[2] -= gameCanvas.player.velocity;
-                gameCanvas.playerMove();
-            }
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                gameCanvas.player.y[0] += gameCanvas.player.velocity;
-                gameCanvas.player.y[1] += gameCanvas.player.velocity;
-                gameCanvas.player.y[2] += gameCanvas.player.velocity;
-                gameCanvas.playerMove();
-            }
-        }
+            @Override
+            public void keyPressed(KeyEvent e) {
 
-        @Override
-        public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    gameCanvas.player.angle -= 5;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    gameCanvas.player.angle += 5;
+                }
 
-        }
-    });
-}
+                gameCanvas.player.velocity.set(new Vector2D(2, 0).rotate(gameCanvas.player.angle)
+                );
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_UP){
+                    gameCanvas.player.velocity.multiply(0.5f);
+                }
+            }
+        });
+    }
 
     private void windowEvent() {
         this.addWindowListener(new WindowAdapter() {
