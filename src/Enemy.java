@@ -20,7 +20,6 @@ public class Enemy {
     private List<BulletEnemy> bulletEnemies;
     private int timeIntervalBullet = 0;
 
-    Random random = new Random();
     public Enemy() {
         this.position = new Vector2D();
         this.velocity = new Vector2D();

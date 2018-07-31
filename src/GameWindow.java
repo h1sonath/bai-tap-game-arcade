@@ -33,9 +33,7 @@ public class GameWindow extends JFrame {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    gameCanvas.player.velocity.multiply(10);
-                }
+
             }
 
             @Override
@@ -43,13 +41,19 @@ public class GameWindow extends JFrame {
 
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     gameCanvas.player.angle -= 5;
+                    gameCanvas.player.bulletRotate= gameCanvas.player.bulletRotate.rotate(-5);
                 }
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     gameCanvas.player.angle += 5;
+                    gameCanvas.player.bulletRotate= gameCanvas.player.bulletRotate.rotate(5);
                 }
-
                 gameCanvas.player.velocity.set(new Vector2D(2, 0).rotate(gameCanvas.player.angle)
                 );
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    gameCanvas.player.velocity.multiply(2);
+                }
+
+
             }
 
             @Override

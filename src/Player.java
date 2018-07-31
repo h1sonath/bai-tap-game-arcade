@@ -14,13 +14,13 @@ public class Player {
     public Vector2D velocity;
     private int timeIntervalFollow=0;
     private List<Vector2D> vertices;
-
+    public Vector2D bulletRotate = new Vector2D(3,0 );
     private Polygon polygon;
 
     public double angle = 0.0;
 
 
-    private List<BulletPlayer> bulletPlayers;
+    public List<BulletPlayer> bulletPlayers;
     private List<EnemyFollow> enemyFollows;
     private int timeIntervalShoot = 0;
     private Random random = new Random();
@@ -35,7 +35,7 @@ public class Player {
         this.vertices = Arrays.asList(
                 new Vector2D(),
                 new Vector2D(0, 18),
-                new Vector2D(21, 9)
+                new Vector2D((float) (Math.sqrt(3)/2)*18, 9)
         );
         this.polygon = new Polygon();
     }
@@ -55,7 +55,8 @@ public class Player {
                 e.printStackTrace();
             }
             bulletPlayer.position.set(this.position.x, this.position.y);
-            bulletPlayer.velocity.set(5, 0);
+            bulletPlayer.velocity.set(this.bulletRotate.x, this.bulletRotate.y);
+
             this.bulletPlayers.add((bulletPlayer));
             this.timeIntervalShoot = 0;
         } else {
@@ -82,7 +83,6 @@ public class Player {
         this.enemyFollows.forEach(enemyFollow -> enemyFollow.run());
         this.enemyFollows.forEach(enemyFollow -> enemyFollow.updateVelocity(this.position));
     }
-
 
     public void render(Graphics graphics) {
         graphics.setColor(Color.RED);
