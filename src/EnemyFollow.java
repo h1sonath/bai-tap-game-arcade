@@ -13,7 +13,7 @@ public class EnemyFollow {
         this.position.addUp(velocity);
     }
     public void updateVelocity (Vector2D vector2D){
-        velocity.set(vector2D.x - this.position.x, vector2D.y - this.position.y);
+        velocity.set(vector2D.subtractBy(this.position.x, this.position.y));
         velocity = velocity.normalized();
     }
     public void render(Graphics graphics){
