@@ -1,22 +1,29 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class EnemyFollow {
-    public BufferedImage image;
+
     public Vector2D position;
+    public Renderer renderer;
+
     public Vector2D velocity;
-    public EnemyFollow(){
+
+    public EnemyFollow() {
         this.position = new Vector2D();
         this.velocity = new Vector2D();
+        this.renderer = new ImageRenderer("resources/images/circle.png", 20, 20);
     }
-    public void run(){
-        this.position.addUp(velocity);
+    public void run() {
+        this.position.addUp(this.velocity);
     }
-    public void updateVelocity (Vector2D vector2D){
-        velocity.set(vector2D.x - this.position.x, vector2D.y - this.position.y);
-        velocity = velocity.normalized();
+    public void update(Vector2D position) {
+        this.velocity.set(
+                position.subtract(this.position).normalized()
+        ).multiply(1.5f);
+
     }
-    public void render(Graphics graphics){
-        graphics.drawImage(this.image,(int)this.position.x,(int)this.position.y,16,16,null);
+
+    public void render(Graphics graphics) {
+        this.renderer.render(graphics, this.position);
+
     }
 }
