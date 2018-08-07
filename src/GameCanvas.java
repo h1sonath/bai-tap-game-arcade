@@ -1,18 +1,17 @@
-import javax.imageio.ImageIO;
+import base.GameObjectManager;
+import game.background.Background;
+import game.enemy.CreateEnemy;
+import game.enemyfollow.CreateEnemyFollow;
+import game.player.Player;
+import game.star.CreateStar;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameCanvas extends JPanel {
 
-    private List<Enemy> enemies;
     private BufferedImage backBuffered;
-    private Background background = new Background();
-    private CreateEnemy createEnemy = new CreateEnemy();
-    private CreateEnemyFollow createEnemyFollow = new CreateEnemyFollow();
-    private CreateStar createStar = new CreateStar();
 
     public Player player;
 
@@ -35,7 +34,10 @@ public class GameCanvas extends JPanel {
     }
 
     private void setupCharacter() {
-        this.enemies = new ArrayList<>();
+        GameObjectManager.instance.add(new Background());
+        GameObjectManager.instance.add(new CreateStar());
+        GameObjectManager.instance.add(new CreateEnemy());
+        GameObjectManager.instance.add(new CreateEnemyFollow());
         this.setupPlayer();
     }
 
@@ -43,6 +45,7 @@ public class GameCanvas extends JPanel {
         this.player = new Player();
         this.player.position.set(200, 300);
         this.player.velocity.set(3.5f, 0);
+        GameObjectManager.instance.add(this.player);
     }
 
     @Override
@@ -51,25 +54,11 @@ public class GameCanvas extends JPanel {
     }
 
     public void renderAll() {
-        this.background.render(this.graphics);
-        this.player.render(this.graphics);
-        this.enemies.forEach(enemy -> enemy.render(graphics));
-        this.createEnemy.render(graphics);
-        this.createEnemyFollow.render(this.graphics);
-        this.createStar.render(graphics);
+        GameObjectManager.instance.renderAll(this.graphics);
         this.repaint();
     }
 
     public void runAll() {
-        this.enemies.forEach(enemy -> enemy.run());
-        this.player.run();
-        this.createEnemy.run();
-        this.createEnemyFollow.updateVelocity(this.player.position);
-        this.createEnemyFollow.run();
-        this.createStar.run();
+        GameObjectManager.instance.runAll();
     }
 }
-
-
-
-
