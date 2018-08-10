@@ -3,6 +3,8 @@ package base;
 import renderer.Renderer;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameObject {
 
@@ -10,12 +12,18 @@ public class GameObject {
 
     public Renderer renderer;
 
+    public List<Attribute> attributes;
+
+    public boolean isAlive = true;
+
     public GameObject() {
         this.position = new Vector2D();
+        this.attributes = new ArrayList<>();
     }
 
     public void run() {
-
+        this.attributes
+                .forEach(attribute -> attribute.run(this));
     }
 
     public void render(Graphics graphics) {

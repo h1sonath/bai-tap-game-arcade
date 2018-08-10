@@ -1,4 +1,9 @@
+import base.Vector2D;
+import input.KeyboardInput;
+
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -23,7 +28,12 @@ public class GameWindow extends JFrame {
     }
 
     private void event() {
+        this.keyboardEvent();
         this.windowEvent();
+    }
+
+    private void keyboardEvent() {
+        this.addKeyListener(KeyboardInput.instance);
     }
 
     private void windowEvent() {

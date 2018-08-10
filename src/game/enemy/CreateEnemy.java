@@ -3,11 +3,7 @@ package game.enemy;
 import base.FrameCounter;
 import base.GameObject;
 import base.GameObjectManager;
-import game.enemy.Enemy;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class CreateEnemy extends GameObject {
@@ -27,6 +23,7 @@ public class CreateEnemy extends GameObject {
             Enemy enemy = new Enemy();
             enemy.position.set(this.random.nextInt(1024), this.random.nextInt(600));
             enemy.velocity.set(this.random.nextInt(3) + 1, this.random.nextInt(3) + 1);
+
             GameObjectManager.instance.add(enemy);
             this.frameCounter.reset();
         }
