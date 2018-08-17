@@ -3,14 +3,16 @@ package game.enemyfollow;
 import base.GameObject;
 import base.GameObjectManager;
 import base.Vector2D;
+import game.enemy.EnemyAttack;
+import game.enemy.EnemyShoot;
 import game.player.Player;
 import physic.BoxCollider;
+import physic.PhysicBody;
 import renderer.ImageRenderer;
 
-public class EnemyFollow extends GameObject {
+public class EnemyFollow extends GameObject implements PhysicBody {
 
     public Vector2D velocity;
-
     public BoxCollider boxCollider;
 
     public EnemyFollow() {
@@ -22,14 +24,16 @@ public class EnemyFollow extends GameObject {
     @Override
     public void run() {
         super.run();
-        this.position.addUp(velocity);
-        this.boxCollider.position.set(this.position.x - 8,this.position.y - 8);
-        Player player = GameObjectManager.instance.findPlayer();
-        if(player!=null){
-            this.update(player.position);
+        this.position.addUp(this.velocity);
+        if (this.position.x < 0 || this.position.x>1024 || this.position.y<0 || this.position.y>600)
+        {
+            this.isAlive = false;
         }
-        if(GameObjectManager.instance.checkCollision5(this)){
-            player.isAlive = false;
+        this.boxCollider.position.set(this.position.x - 10, this.position.y - 10);
+
+        Player player = GameObjectManager.instance.findPlayer();
+        if (player != null) {
+            this.update(player.position);
         }
     }
 
@@ -37,6 +41,15 @@ public class EnemyFollow extends GameObject {
         this.velocity.set(
                 position.subtract(this.position).normalized()
         ).multiply(1.5f);
+    }
 
+    @Override
+    public void getHit(GameObject gameObject) {
+        this.isAlive = false;
+    }
+
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.boxCollider;
     }
 }

@@ -1,20 +1,17 @@
+
 package game.enemy;
 
 import base.GameObject;
-import base.GameObjectManager;
 import base.Vector2D;
-import game.player.Player;
 import physic.BoxCollider;
+import physic.PhysicBody;
 import renderer.ImageRenderer;
 
-import java.awt.*;
-
-public class Enemy extends GameObject {
+public class Enemy extends GameObject implements PhysicBody {
 
     public Vector2D velocity;
-
-    public EnemyShoot enemyShoot;
     public BoxCollider boxCollider;
+    public EnemyShoot enemyShoot;
 
     public Enemy() {
         this.renderer = new ImageRenderer("resources/images/circle.png", 20, 20);
@@ -27,12 +24,19 @@ public class Enemy extends GameObject {
     public void run() {
         super.run();
         this.position.addUp(this.velocity);
+        if (this.position.x < 0 || this.position.x > 1024 || this.position.y < 0 || this.position.y > 600) {
+            this.isAlive = false;
+        }
+        this.boxCollider.position.set(this.position.x - 10, this.position.y - 10);
         this.enemyShoot.run(this);
-        this.boxCollider.position.set(this.position.x - 10,this.position.y - 10);
-        if(GameObjectManager.instance.checkCollision4(this)){
-            Player player = GameObjectManager.instance.findPlayer();
-            player.isAlive = false;
-        }
-        }
     }
+
+    public void getHit(GameObject gameObject) {
+        this.isAlive = false;
+    }
+    public BoxCollider getBoxCollider() {
+        return this.boxCollider;
+    }
+}
+
 
